@@ -66,8 +66,8 @@ model Review {
   comment   String
   rating    Int
   serviceId String
-  service   Service @relation(fields: [serviceId], references: [id])
   userId    String
+  service   Service @relation(fields: [serviceId], references: [id])
   user      User    @relation(fields: [userId], references: [id])
 
   @@map("reviews")

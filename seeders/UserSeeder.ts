@@ -1,18 +1,18 @@
 import { faker } from '@faker-js/faker';
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 const seedDatabase = async (numberOfRecords: number) => {
+    const hashedPassword = await bcrypt.hash("password", 10);
     const records = Array.from({ length: numberOfRecords }, () => ({
+        // const hashedPassword = await bcrypt.hash(data.password, 10)
         // Define your Prisma model fields and use faker to generate fake data
         name: faker.person.fullName(),
         email: faker.internet.email(),
-        password: "password",
+        password: hashedPassword,
         role: faker.helpers.arrayElement(["customer", "admin", "super_admin"]),
-        contactNo: faker.phone.number(),
-        address: `${faker.location.city()}, ${faker.location.country()}`,
-        profileImg: faker.image.avatar()
         // Add other fields as needed
     }));
 

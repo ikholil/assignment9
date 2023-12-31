@@ -39,7 +39,7 @@ const seedDatabase = async () => {
         return {
             title: service,
             price: faker.helpers.rangeToNumber({ max: 900, min: 300 }),
-            description: faker.person.jobDescriptor()
+            description: faker.word.words({ count: 30 })
         }
     })
 

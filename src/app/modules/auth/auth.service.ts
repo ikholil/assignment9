@@ -11,9 +11,12 @@ const signUp = async (data: User) => {
     const hashedPassword = await bcrypt.hash(data.password, 10)
     const withHashedPassword = {
         ...data,
-        password: hashedPassword
+        password: hashedPassword,
     }
     const result = await prisma.user.create({ data: withHashedPassword })
+    if (result) {
+        await prisma.profile.create({ data: { userId: result.id } })
+    }
     return result
 }
 
