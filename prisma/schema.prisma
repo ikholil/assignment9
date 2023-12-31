@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(uuid())
+  name     String
+  email    String    @unique
+  password String
+  role     String    @default("customer")
+  bookings Booking[]
+  reviews  Review[]
+  profile  Profile?
+
+  @@map("users")
+}
+
+model Profile {
+  id         String    @id @default(uuid())
+  contactNo  String?
+  address    String?
+  profileImg String?
+  bio        String?
+  gender     String?
+  birthDate  DateTime?
+  userId     String    @unique
+  user       User      @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Service {
+  id          String    @id @default(uuid())
+  title       String
+  price       Int
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+  reviews     Review[]
+
+  @@map("services")
+}
+
+model Booking {
+  id        String   @id @default(uuid())
+  status    String   @default("pending")
+  date      DateTime
+  serviceId String
+  userId    String
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  service   Service  @relation(fields: [serviceId], references: [id])
+
+  @@map("bookings")
+}
+
+model Review {
+  id        String  @id @default(uuid())
+  comment   String
+  rating    Int
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@map("reviews")
+}
+
+// profile fields -> bio, birthdate, gender, 
