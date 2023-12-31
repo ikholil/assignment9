@@ -3,6 +3,16 @@ import httpStatus from "http-status";
 import catchAsync from "../../../shared/catchAsync";
 import { userService } from "./user.service";
 
+const AddUser = catchAsync(async (req: Request, res: Response) => {
+    const result = userService.createUser(req.body);
+    res.json({
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "User Created successfully",
+        data: result
+    })
+})
+
 const getAllUser = catchAsync(async (req: Request, res: Response) => {
     const result = await userService.getAllUser()
     res.json({
@@ -39,15 +49,7 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
         data: result
     })
 })
-const getUserProfile = catchAsync(async (req: Request, res: Response) => {
-    const result = await userService.getUserProfile(req.user?.id)
-    res.json({
-        success: true,
-        statusCode: httpStatus.OK,
-        message: "User Profile data retrieved successfully",
-        data: result
-    })
-})
+
 export const userController = {
-    getAllUser, getSingleUser, updateUser, deleteUser, getUserProfile
+    AddUser, getAllUser, getSingleUser, updateUser, deleteUser
 }

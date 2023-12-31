@@ -1,6 +1,7 @@
 import express from 'express';
 import { AuthRouter } from '../modules/auth/auth.route';
 import { bookingRouter } from '../modules/booking/booking.route';
+import { feedbackRouter } from '../modules/feedback/feedback.route';
 import { profileRouter } from '../modules/profile/profile.route';
 import { reviewRouter } from '../modules/review/review.route';
 import { serviceRouter } from '../modules/service/service.route';
@@ -30,8 +31,12 @@ const moduleRoutes = [
     route: profileRouter
   },
   {
-    path: "/review",
+    path: "/reviews",
     route: reviewRouter
+  },
+  {
+    path: "/feedbacks",
+    route: feedbackRouter
   }
 
 ];

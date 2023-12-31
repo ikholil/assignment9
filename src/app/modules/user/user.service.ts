@@ -3,6 +3,11 @@ import httpStatus from "http-status"
 import ApiError from "../../../errors/ApiError"
 import prisma from "../../../shared/prisma"
 
+const createUser = async (data: User) => {
+    const result = await prisma.user.create({ data })
+    return result
+}
+
 const getAllUser = async () => {
     const result = await prisma.user.findMany({})
     return result
@@ -27,10 +32,7 @@ const deleteUser = async (id: string) => {
     const result = await prisma.user.delete({ where: { id } })
     return result
 }
-const getUserProfile = async (id: string) => {
-    const result = await prisma.user.findUnique({ where: { id } })
-    return result
-}
+
 export const userService = {
-    getAllUser, getSingleUser, updateUser, deleteUser, getUserProfile
+    createUser, getAllUser, getSingleUser, updateUser, deleteUser
 }

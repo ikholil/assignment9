@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(uuid())
+  id       String     @id @default(uuid())
   name     String
-  email    String    @unique
+  email    String     @unique
   password String
-  role     String    @default("customer")
+  role     String     @default("customer")
   bookings Booking[]
   reviews  Review[]
   profile  Profile?
+  feedBack FeedBack[]
 
   @@map("users")
 }
@@ -73,4 +74,14 @@ model Review {
   @@map("reviews")
 }
 
-// profile fields -> bio, birthdate, gender, 
+model FeedBack {
+  id      String @id @default(uuid())
+  subject String
+  message String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
+
+  @@map("feedbacks")
+}
+
+// profile fields -> bio, birthdate, gender, age

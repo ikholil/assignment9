@@ -5,11 +5,10 @@ import { userController } from './user.controller'
 
 const router = express.Router()
 
-
-router.get('/', auth(ENUM_USER_ROLE.ADMIN), userController.getAllUser)
-router.get('/profile', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER), userController.getUserProfile)
-router.get('/:id', auth(ENUM_USER_ROLE.ADMIN), userController.getSingleUser)
-router.patch('/:id', auth(ENUM_USER_ROLE.ADMIN), userController.updateUser)
-router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), userController.deleteUser)
+router.post('/create-user', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN), userController.AddUser)
+router.get('/', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN), userController.getAllUser)
+router.get('/:id', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN), userController.getSingleUser)
+router.patch('/:id', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN), userController.updateUser)
+router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN), userController.deleteUser)
 
 export const userRouter = router
