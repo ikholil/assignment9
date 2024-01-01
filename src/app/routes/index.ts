@@ -1,5 +1,6 @@
 import express from 'express';
 import { AuthRouter } from '../modules/auth/auth.route';
+import { blogRouter } from '../modules/blog/blog.route';
 import { bookingRouter } from '../modules/booking/booking.route';
 import { faqRouter } from '../modules/faq/faq.route';
 import { feedbackRouter } from '../modules/feedback/feedback.route';
@@ -43,7 +44,10 @@ const moduleRoutes = [
     path: "/faqs",
     route: faqRouter
   },
-
+  {
+    path: "/blogs",
+    route: blogRouter
+  }
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));
