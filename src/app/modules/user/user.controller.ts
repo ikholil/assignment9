@@ -45,7 +45,7 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
     res.json({
         success: true,
         statusCode: httpStatus.OK,
-        message: "users deleted successfully",
+        message: "user deleted successfully",
         data: result
     })
 })

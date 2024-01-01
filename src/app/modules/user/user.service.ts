@@ -1,10 +1,19 @@
 import { User } from "@prisma/client"
+import bcrypt from 'bcrypt'
 import httpStatus from "http-status"
 import ApiError from "../../../errors/ApiError"
 import prisma from "../../../shared/prisma"
 
 const createUser = async (data: User) => {
-    const result = await prisma.user.create({ data })
+    const hashedPassword = await bcrypt.hash(data.password, 10)
+    const withHashedPassword = {
+        ...data,
+        password: hashedPassword,
+    }
+    const result = await prisma.user.create({ data: withHashedPassword })
+    if (result) {
+        await prisma.profile.create({ data: { userId: result.id } })
+    }
     return result
 }
 
