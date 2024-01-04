@@ -13,15 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userService = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const http_status_1 = __importDefault(require("http-status"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const createUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const hashedPassword = yield bcrypt_1.default.hash(data.password, 10);
+    const withHashedPassword = Object.assign(Object.assign({}, data), { password: hashedPassword });
+    const result = yield prisma_1.default.user.create({ data: withHashedPassword });
+    if (result) {
+        yield prisma_1.default.profile.create({ data: { userId: result.id } });
+    }
+    return result;
+});
 const getAllUser = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.findMany({});
     return result;
 });
 const getSingleUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.user.findUnique({ where: { id } });
+    const result = yield prisma_1.default.user.findUnique({ where: { id }, include: { profile: true } });
     return result;
 });
 const updateUser = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,10 +50,6 @@ const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.delete({ where: { id } });
     return result;
 });
-const getUserProfile = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.user.findUnique({ where: { id } });
-    return result;
-});
 exports.userService = {
-    getAllUser, getSingleUser, updateUser, deleteUser, getUserProfile
+    createUser, getAllUser, getSingleUser, updateUser, deleteUser
 };

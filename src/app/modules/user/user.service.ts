@@ -22,7 +22,7 @@ const getAllUser = async () => {
     return result
 }
 const getSingleUser = async (id: string) => {
-    const result = await prisma.user.findUnique({ where: { id } })
+    const result = await prisma.user.findUnique({ where: { id }, include: { profile: true } })
     return result
 }
 const updateUser = async (id: string, data: Partial<User>) => {

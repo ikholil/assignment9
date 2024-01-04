@@ -12,45 +12,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookingController = void 0;
+exports.blogController = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
-const booking_service_1 = require("./booking.service");
-const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const blog_service_1 = require("./blog.service");
+const createBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
-    const bookingData = Object.assign(Object.assign({}, req.body), { userId: user === null || user === void 0 ? void 0 : user.id });
-    const result = yield booking_service_1.bookingServiceList.createBooking(bookingData);
+    const blogData = Object.assign(Object.assign({}, req.body), { authorId: user === null || user === void 0 ? void 0 : user.id });
+    const result = yield blog_service_1.blogServiceList.createBlog(blogData);
     if (typeof (result) === "string") {
         res.json({
             success: false,
             statusCode: http_status_1.default.NOT_FOUND,
-            message: "Serivce Not Found"
+            message: "Blog Not Found"
         });
     }
     res.json({
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Booking created successfully",
+        message: "Blog created successfully",
         data: result
     });
 }));
-const getAllBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_service_1.bookingServiceList.getAllBooking(req.query);
+const getAllBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield blog_service_1.blogServiceList.getAllBlog(req.query);
     res.json({
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Bookings retrieved successfully",
+        message: "blogs retrieved successfully",
         meta: result.meta,
         data: result.data
     });
 }));
-const getSingleBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_service_1.bookingServiceList.getSingleBooking(req.params.id);
+const getSingleBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield blog_service_1.blogServiceList.getSingleBlog(req.params.id);
     if (result) {
         res.json({
             success: true,
             statusCode: http_status_1.default.OK,
-            message: "Booking retrieved successfully",
+            message: "Blog retrieved successfully",
             data: result
         });
     }
@@ -58,17 +58,17 @@ const getSingleBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         res.json({
             success: false,
             statusCode: http_status_1.default.NOT_FOUND,
-            message: "Booking Not Found",
+            message: "Blog Not Found",
         });
     }
 }));
-const updateBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_service_1.bookingServiceList.updateBooking(req.params.id, req.body);
+const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield blog_service_1.blogServiceList.updateBlog(req.params.id, req.body);
     if (result) {
         res.json({
             success: true,
             statusCode: http_status_1.default.OK,
-            message: "Booking Updated successfully",
+            message: "Blog Updated successfully",
             data: result
         });
     }
@@ -76,19 +76,19 @@ const updateBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         res.json({
             success: false,
             statusCode: http_status_1.default.NOT_FOUND,
-            message: "Booking Not Found",
+            message: "Blog Not Found",
         });
     }
 }));
-const deleteBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_service_1.bookingServiceList.deleteBooking(req.params.id);
+const deleteBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield blog_service_1.blogServiceList.deleteBlog(req.params.id);
     res.json({
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "Booking deleted successfully",
+        message: "Blog deleted successfully",
         data: result
     });
 }));
-exports.bookingController = {
-    createBooking, getAllBooking, getSingleBooking, updateBooking, deleteBooking
+exports.blogController = {
+    createBlog, getAllBlog, getSingleBlog, updateBlog, deleteBlog
 };

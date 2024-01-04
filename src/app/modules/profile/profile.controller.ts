@@ -4,7 +4,7 @@ import catchAsync from "../../../shared/catchAsync";
 import { profileServices } from "./profile.service";
 
 const getSingleProfile = catchAsync(async (req: Request, res: Response) => {
-    const result = await profileServices.getSingleProfile(req.params.id)
+    const result = await profileServices.getSingleProfile(req.user?.id)
     if (result) {
         res.json({
             success: true,
@@ -22,7 +22,8 @@ const getSingleProfile = catchAsync(async (req: Request, res: Response) => {
     }
 })
 const updateProfile = catchAsync(async (req: Request, res: Response) => {
-    const result = await profileServices.updateProfile(req.params.id, req.body)
+
+    const result = await profileServices.updateProfile(req.user?.id, req.body)
     if (result) {
         res.json({
             success: true,

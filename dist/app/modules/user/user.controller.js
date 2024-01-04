@@ -16,6 +16,15 @@ exports.userController = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const user_service_1 = require("./user.service");
+const AddUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = user_service_1.userService.createUser(req.body);
+    res.json({
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: "User Created successfully",
+        data: result
+    });
+}));
 const getAllUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_service_1.userService.getAllUser();
     res.json({
@@ -48,20 +57,10 @@ const deleteUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     res.json({
         success: true,
         statusCode: http_status_1.default.OK,
-        message: "users deleted successfully",
-        data: result
-    });
-}));
-const getUserProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    const result = yield user_service_1.userService.getUserProfile((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
-    res.json({
-        success: true,
-        statusCode: http_status_1.default.OK,
-        message: "User Profile data retrieved successfully",
+        message: "user deleted successfully",
         data: result
     });
 }));
 exports.userController = {
-    getAllUser, getSingleUser, updateUser, deleteUser, getUserProfile
+    AddUser, getAllUser, getSingleUser, updateUser, deleteUser
 };

@@ -75,64 +75,6 @@ const getAllService = (queries) => __awaiter(void 0, void 0, void 0, function* (
         data: services,
     };
 });
-// const getAllService = async (queries: queryOptions) => {
-//     const { page, size, sortBy, sortOrder, minPrice, maxPrice, search } = queries;
-//     const pageNumber = parseInt(page as string) || 1;
-//     const pageSize = parseInt(size as string) || 10;
-//     let filters:any = {};
-//     // Apply filters based on query parameters
-//     if (minPrice) {
-//         filters.price = {
-//             gte: parseFloat(minPrice),
-//         };
-//     }
-//     if (maxPrice) {
-//         filters.price = {
-//             ...(filters.price || {}),
-//             lte: parseFloat(maxPrice),
-//         };
-//     }
-//     // Apply search filter
-//     if (search) {
-//         filters.OR = [
-//             {
-//                 title: {
-//                     contains: search,
-//                     mode: 'insensitive',
-//                 },
-//             },
-//             {
-//                 description: {
-//                     contains: search,
-//                     mode: 'insensitive',
-//                 },
-//             }
-//         ];
-//     }
-//     const orderBy: any = {};
-//     // Apply sorting based on sortBy and sortOrder parameters
-//     if (sortBy && sortOrder) {
-//         orderBy[sortBy] = sortOrder.toLowerCase();
-//     }
-//     const services = await prisma.service.findMany({
-//         where: filters,
-//         skip: (pageNumber - 1) * pageSize,
-//         take: pageSize,
-//         orderBy,
-//     });
-//     const totalServices = await prisma.service.count({
-//         where: filters,
-//     });
-//     return {
-//         meta: {
-//             page: pageNumber,
-//             size: pageSize,
-//             total: totalServices,
-//             totalPage: Math.ceil(totalServices / pageSize),
-//         },
-//         data: services,
-//     }
-// }
 const getSingleService = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.service.findUnique({ where: { id } });
     return result;

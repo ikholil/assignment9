@@ -23,6 +23,9 @@ const signUp = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield bcrypt_1.default.hash(data.password, 10);
     const withHashedPassword = Object.assign(Object.assign({}, data), { password: hashedPassword });
     const result = yield prisma_1.default.user.create({ data: withHashedPassword });
+    if (result) {
+        yield prisma_1.default.profile.create({ data: { userId: result.id } });
+    }
     return result;
 });
 const signIn = (data) => __awaiter(void 0, void 0, void 0, function* () {
