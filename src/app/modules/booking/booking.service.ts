@@ -75,6 +75,10 @@ const getSingleBooking = async (id: string) => {
     const result = await prisma.booking.findUnique({ where: { id } })
     return result
 }
+const getUserBookings = async (id: string) => {
+    const result = await prisma.booking.findMany({ where: { userId: id } })
+    return result
+}
 // const getBooksbyCategory = async (categoryId: string) => {
 //     console.log(categoryId)
 //     const result = await prisma.booking.findMany({ where: { categoryId } })
@@ -97,5 +101,5 @@ const deleteBooking = async (id: string) => {
     return result
 }
 export const bookingServiceList = {
-    getAllBooking, getSingleBooking, updateBooking, deleteBooking, createBooking
+    getAllBooking, getSingleBooking, updateBooking, deleteBooking, createBooking, getUserBookings
 }

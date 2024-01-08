@@ -33,17 +33,26 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield auth_service_1.authService.signIn(req.body);
-        const cookieOptions = {
-            secure: config_1.default.env === 'production',
-            httpOnly: true,
-        };
-        res.cookie('refreshToken', result === null || result === void 0 ? void 0 : result.refreshToken, cookieOptions);
-        res.json({
-            success: true,
-            statusCode: http_status_1.default.ok,
-            message: "User Logged in Successfully",
-            token: result === null || result === void 0 ? void 0 : result.accessToken
-        });
+        if (result === null || result === void 0 ? void 0 : result.accessToken) {
+            const cookieOptions = {
+                secure: config_1.default.env === 'production',
+                httpOnly: true,
+            };
+            res.cookie('refreshToken', result === null || result === void 0 ? void 0 : result.refreshToken, cookieOptions);
+            res.json({
+                success: true,
+                statusCode: http_status_1.default.ok,
+                message: "User Logged in Successfully",
+                token: result === null || result === void 0 ? void 0 : result.accessToken
+            });
+        }
+        else {
+            res.json({
+                success: false,
+                statusCode: http_status_1.default.NOT_FOUND,
+                message: "Username or password incorrect",
+            });
+        }
     }
     catch (error) {
         console.log(error);

@@ -62,6 +62,25 @@ const getSingleBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         });
     }
 }));
+const getUserBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const result = yield booking_service_1.bookingServiceList.getUserBookings((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
+    if (result) {
+        res.json({
+            success: true,
+            statusCode: http_status_1.default.OK,
+            message: "Bookings retrieved successfully",
+            data: result
+        });
+    }
+    else {
+        res.json({
+            success: false,
+            statusCode: http_status_1.default.NOT_FOUND,
+            message: "Booking Not Found",
+        });
+    }
+}));
 const updateBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield booking_service_1.bookingServiceList.updateBooking(req.params.id, req.body);
     if (result) {
@@ -90,5 +109,5 @@ const deleteBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     });
 }));
 exports.bookingController = {
-    createBooking, getAllBooking, getSingleBooking, updateBooking, deleteBooking
+    createBooking, getAllBooking, getSingleBooking, updateBooking, deleteBooking, getUserBookings
 };

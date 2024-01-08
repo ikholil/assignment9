@@ -17,7 +17,8 @@ const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const profile_service_1 = require("./profile.service");
 const getSingleProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield profile_service_1.profileServices.getSingleProfile(req.params.id);
+    var _a;
+    const result = yield profile_service_1.profileServices.getSingleProfile((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
     if (result) {
         res.json({
             success: true,
@@ -35,7 +36,8 @@ const getSingleProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 
     }
 }));
 const updateProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield profile_service_1.profileServices.updateProfile(req.params.id, req.body);
+    var _b;
+    const result = yield profile_service_1.profileServices.updateProfile((_b = req.user) === null || _b === void 0 ? void 0 : _b.id, req.body);
     if (result) {
         res.json({
             success: true,

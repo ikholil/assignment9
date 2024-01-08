@@ -25,15 +25,15 @@ model User {
 }
 
 model Profile {
-  id         String    @id @default(uuid())
+  id         String  @id @default(uuid())
   contactNo  String?
   address    String?
   profileImg String?
   bio        String?
   gender     String?
-  birthDate  DateTime?
-  userId     String    @unique
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  birthDate  String?
+  userId     String  @unique
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("profiles")
 }
@@ -55,7 +55,7 @@ model Service {
 model Booking {
   id        String   @id @default(uuid())
   status    String   @default("pending")
-  date      DateTime
+  date      String
   serviceId String
   userId    String
   createAt  DateTime @default(now())

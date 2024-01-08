@@ -55,6 +55,24 @@ const getSingleBooking = catchAsync(async (req: Request, res: Response) => {
         })
     }
 })
+const getUserBookings = catchAsync(async (req: Request, res: Response) => {
+    const result = await bookingServiceList.getUserBookings(req.user?.id)
+    if (result) {
+        res.json({
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "Bookings retrieved successfully",
+            data: result
+        })
+    }
+    else {
+        res.json({
+            success: false,
+            statusCode: httpStatus.NOT_FOUND,
+            message: "Booking Not Found",
+        })
+    }
+})
 const updateBooking = catchAsync(async (req: Request, res: Response) => {
     const result = await bookingServiceList.updateBooking(req.params.id, req.body)
     if (result) {
@@ -84,5 +102,5 @@ const deleteBooking = catchAsync(async (req: Request, res: Response) => {
 })
 
 export const bookingController = {
-    createBooking, getAllBooking, getSingleBooking, updateBooking, deleteBooking
+    createBooking, getAllBooking, getSingleBooking, updateBooking, deleteBooking, getUserBookings
 }

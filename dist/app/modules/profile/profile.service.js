@@ -17,13 +17,13 @@ const http_status_1 = __importDefault(require("http-status"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const getSingleProfile = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.profile.findUnique({ where: { id } });
+    const result = yield prisma_1.default.user.findUnique({ where: { id }, include: { profile: true } });
     return result;
 });
 const updateProfile = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
     const isExist = yield prisma_1.default.profile.findUnique({ where: { id } });
     if (!isExist) {
-        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'Booking Not Found');
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'Profile Not Found');
     }
     const result = yield prisma_1.default.profile.update({ where: { id }, data });
     return result;

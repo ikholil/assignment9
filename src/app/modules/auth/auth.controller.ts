@@ -22,19 +22,28 @@ const signUp = async (req: Request, res: Response) => {
 const signIn = async (req: Request, res: Response) => {
     try {
         const result = await authService.signIn(req.body)
-        const cookieOptions = {
-            secure: config.env === 'production',
-            httpOnly: true,
-        };
+        if (result?.accessToken) {
 
-        res.cookie('refreshToken', result?.refreshToken, cookieOptions);
+            const cookieOptions = {
+                secure: config.env === 'production',
+                httpOnly: true,
+            };
 
-        res.json({
-            success: true,
-            statusCode: httpStatus.ok,
-            message: "User Logged in Successfully",
-            token: result?.accessToken
-        })
+            res.cookie('refreshToken', result?.refreshToken, cookieOptions);
+
+            res.json({
+                success: true,
+                statusCode: httpStatus.ok,
+                message: "User Logged in Successfully",
+                token: result?.accessToken
+            })
+        } else {
+            res.json({
+                success: false,
+                statusCode: httpStatus.NOT_FOUND,
+                message: "Username or password incorrect",
+            })
+        }
     } catch (error) {
         console.log(error)
     }

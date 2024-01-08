@@ -54,6 +54,10 @@ const getSingleBooking = (id) => __awaiter(void 0, void 0, void 0, function* () 
     const result = yield prisma_1.default.booking.findUnique({ where: { id } });
     return result;
 });
+const getUserBookings = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.default.booking.findMany({ where: { userId: id } });
+    return result;
+});
 // const getBooksbyCategory = async (categoryId: string) => {
 //     console.log(categoryId)
 //     const result = await prisma.booking.findMany({ where: { categoryId } })
@@ -76,5 +80,5 @@ const deleteBooking = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 exports.bookingServiceList = {
-    getAllBooking, getSingleBooking, updateBooking, deleteBooking, createBooking
+    getAllBooking, getSingleBooking, updateBooking, deleteBooking, createBooking, getUserBookings
 };
